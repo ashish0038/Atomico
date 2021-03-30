@@ -11,6 +11,9 @@ body {
   background-color: #eff4ff;
   font-family: "Okra", Courier, monospace;
 }
+a {
+  text-decoration: none;
+}
 .into_section {
   background-color: #22252e;
   height: 100vh;
@@ -29,10 +32,14 @@ body {
   align-items: self-end;
   margin-top: 12em;
 }
-.into_contain .into_title {
+.into_contain .into_title a {
   color: #bfc5d8;
   letter-spacing: 3px;
   font-size: 1em;
+  text-decoration: none;
+  padding: 15px 35px;
+  border-radius: 8px;
+  background-color: #292d39;
 }
 .atomico_into_box {
   background-color: #ffffff;
@@ -84,7 +91,7 @@ body {
   list-style: none;
   padding: 0px 10px;
 }
-.component_nav li {
+.component_nav li a {
   padding: 15px 20px;
   color: #fff;
   text-transform: capitalize;
@@ -93,11 +100,17 @@ body {
   margin-top: 10px;
   cursor: pointer;
   position: relative;
+  width: 100%;
+  display: block;
+  text-decoration: none;
 }
-.component_nav li.active {
+.component_nav li.active a {
   background-color: #1553c9;
 }
-.component_nav li::after {
+.component_nav li:hover a {
+  background-color: #1553c9;
+}
+.component_nav li a::after {
   content: url("../images/arrow-right-icon.svg");
   position: absolute;
   right: 15px;
@@ -118,10 +131,60 @@ footer {
 .links a {
   margin-left: 30px;
   color: #797989;
+  padding: 10px;
+  border-radius: 8px;
+  text-decoration: none;
 }
 .logo {
   display: inline-block;
   background: url("../images/logo.png") center no-repeat;
   width: 123px;
   height: 42px;
+}
+
+.cursor {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--width);
+  height: var(--height);
+  transform: translate(calc(var(--x) - var(--width) / 2), calc(var(--y) - var(--height) / 2));
+  /* transition-duration: 125ms;
+  transition-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
+  transition-property: width, height, transform; */
+  transition: 150ms width cubic-bezier(0.39, 0.575, 0.565, 1), 150ms height cubic-bezier(0.39, 0.575, 0.565, 1),
+    150ms transform cubic-bezier(0.39, 0.575, 0.565, 1);
+  z-index: 1035;
+  pointer-events: none;
+  will-change: transform;
+}
+@media (pointer: fine) {
+  .cursor {
+    display: block;
+  }
+}
+.cursor::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: var(--radius);
+  border: 2px solid #1553c9;
+  opacity: var(--scale);
+  -webkit-transform: scale(var(--scale));
+  transform: scale(var(--scale));
+  transition: 300ms opacity cubic-bezier(0.39, 0.575, 0.565, 1), 300ms transform cubic-bezier(0.39, 0.575, 0.565, 1),
+    150ms border-radius cubic-bezier(0.39, 0.575, 0.565, 1);
+}
+
+html:not(html:hover) .cursor::after {
+  opacity: 0;
+  transform: scale(0);
+}
+
+body {
+  cursor: none;
 }
